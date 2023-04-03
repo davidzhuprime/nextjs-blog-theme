@@ -15,3 +15,36 @@ h6 {
 body {
   font-family: var(--font-secondary);
 }
+
+
+:root {
+  --cyberpunk-bg: #0f0c1a;
+  --cyberpunk-text: #6afcff;
+  --cyberpunk-accent: #ff2079;
+}
+
+body {
+  background-color: var(--cyberpunk-bg);
+  color: var(--cyberpunk-text);
+}
+
+a {
+  color: var(--cyberpunk-accent);
+}
+
+
+button,
+input[type="submit"],
+input[type="button"] {
+  background-color: var(--cyberpunk-accent);
+  color: var(--cyberpunk-bg);
+  border: none;
+  cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: var(--cyberpunk-text);
+  color: var(--cyberpunk-bg);
+}
