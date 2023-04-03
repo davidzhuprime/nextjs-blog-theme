@@ -1,0 +1,22 @@
+from flask import Flask, request, jsonify
+import cv2
+from deepface import DeepFace
+
+app = Flask(__name__)
+
+@app.route('/face_recognition', methods=['POST'])
+def face_recognition():
+    # Get the image file from the POST request
+    file = request.files['image']
+
+    # Load the image using OpenCV
+    image = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+
+    # Use DeepFace to perform face recognition on the image
+    result = DeepFace.verify(image1=image)
+
+    # Return the result as a JSON object
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run()
