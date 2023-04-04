@@ -1,22 +1,15 @@
-const { Kafka } = require('kafkajs')
+import { useSpring, animated } from 'react-spring';
 
-const kafka = new Kafka({
-  clientId: 'my-app',
-  brokers: ['localhost:9092']
-})
+export default function TrumpGuitar() {
+  const styles = useSpring({
+    from: { transform: 'translate3d(-100%,0,0)' },
+    to: { transform: 'translate3d(0,0,0)' },
+  });
 
-const consumer = kafka.consumer({ groupId: 'test-group' })
-
-const run = async () => {
-  await consumer.connect()
-  await consumer.subscribe({ topic: 'my-topic', fromBeginning: true })
-
-  await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-      const messageContent = message.value.toString()
-      // Process the message here
-    },
-  })
+  return (
+    <animated.div style={styles}>
+      <h1>Trump playing guitar!</h1>
+      <img src="/trump-guitar.jpg" alt="Trump playing guitar" />
+    </animated.div>
+  );
 }
-
-run().catch(console.error)
