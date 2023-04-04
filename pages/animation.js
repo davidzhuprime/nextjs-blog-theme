@@ -1,39 +1,20 @@
-import { useEffect, useRef } from 'react';
-import { useSpring, animated } from 'react-spring';
+function animate({timing, draw, duration}) {
 
-const AnimationPage = () => {
-  const ref = useRef(null);
+  let start = performance.now();
 
-  const [{ x }, set] = useSpring(() => ({ x: 0 }));
+  requestAnimationFrame(function animate(time) {
+    // timeFraction goes from 0 to 1
+    let timeFraction = (time - start) / duration;
+    if (timeFraction > 1) timeFraction = 1;
 
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      const width = ref.current.offsetWidth;
-      const mouseX = event.clientX;
-      const diff = mouseX - width / 2;
-      set({ x: diff / 20 });
-    };
+    // calculate the current animation state
+    let progress = timing(timeFraction);
 
-    document.addEventListener('mousemove', handleMouseMove);
+    draw(progress); // draw it
 
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [set]);
+    if (timeFraction < 1) {
+      requestAnimationFrame(animate);
+    }
 
-  return (
-    <div className="container">
-      <div className="box" ref={ref}>
-        <animated.div
-          className="content"
-          style={{ transform: x.interpolate((val) => `translateX(${val}px)`) }}
-        >
-          <h1>Animation Page</h1>
-          <p>Move your mouse to see the animation!</p>
-        </animated.div>
-      </div>
-    </div>
-  );
-};
-
-export default AnimationPage;
+  });
+}
