@@ -1,42 +1,23 @@
-import { Fragment } from 'react'
-import { MDXProvider } from '@mdx-js/react'
-import { math } from 'remark-math'
-import { remarkToReact } from 'gatsby-mdx/utils'
+---
+title: "Newton's Laws of Motion"
+---
 
-const components = {
-  // Add the `math` component from `remark-math`
-  math: props => <Fragment>{props.children}</Fragment>
-}
+# Newton's Laws of Motion
 
-export default function MaxwellEquations() {
-  const content = `
-  ## Maxwell's Equations
+## First Law
 
-  The Maxwell's equations describe the behavior of electromagnetic fields:
+An object at rest stays at rest, and an object in motion stays in motion with the same speed and in the same direction, unless acted upon by an unbalanced force.
 
-  1. Gauss's Law for Electric Fields: 
+## Second Law
 
-  $$\nabla \cdot \mathbf{E} = \\frac{\\rho}{\\epsilon_0}$$
+The acceleration of an object is directly proportional to the net force applied to it and inversely proportional to its mass. This is expressed mathematically as:
 
-  2. Gauss's Law for Magnetic Fields:
+$$ F = ma $$
 
-  $$\nabla \cdot \mathbf{B} = 0$$
+where F is the net force, m is the mass, and a is the acceleration.
 
-  3. Faraday's Law of Induction:
+## Third Law
 
-  $$\nabla \\times \\mathbf{E} = - \\frac{\\partial \\mathbf{B}}{\\partial t}$$
+For every action, there is an equal and opposite reaction. This means that whenever one object exerts a force on another object, the second object exerts an equal and opposite force on the first object.
 
-  4. Ampere's Law with Maxwell's Correction:
-
-  $$\nabla \\times \\mathbf{B} = \\mu_0 \\left( \\mathbf{J} + \\epsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\right)$$
-  `
-
-  // Convert the Markdown to React components with `remarkToReact`
-  const Content = remarkToReact(content, { components, remarkPlugins: [math] })
-
-  return (
-    <MDXProvider components={components}>
-      <Content />
-    </MDXProvider>
-  )
-}
+Newton's laws of motion form the basis of classical mechanics and are essential for understanding the behavior of objects in motion.
