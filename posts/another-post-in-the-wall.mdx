@@ -1,36 +1,42 @@
 import { Fragment } from 'react'
+import { MDXProvider } from '@mdx-js/react'
+import { math } from 'remark-math'
+import { remarkToReact } from 'gatsby-mdx/utils'
+
+const components = {
+  // Add the `math` component from `remark-math`
+  math: props => <Fragment>{props.children}</Fragment>
+}
 
 export default function MaxwellEquations() {
+  const content = `
+  ## Maxwell's Equations
+
+  The Maxwell's equations describe the behavior of electromagnetic fields:
+
+  1. Gauss's Law for Electric Fields: 
+
+  $$\nabla \cdot \mathbf{E} = \\frac{\\rho}{\\epsilon_0}$$
+
+  2. Gauss's Law for Magnetic Fields:
+
+  $$\nabla \cdot \mathbf{B} = 0$$
+
+  3. Faraday's Law of Induction:
+
+  $$\nabla \\times \\mathbf{E} = - \\frac{\\partial \\mathbf{B}}{\\partial t}$$
+
+  4. Ampere's Law with Maxwell's Correction:
+
+  $$\nabla \\times \\mathbf{B} = \\mu_0 \\left( \\mathbf{J} + \\epsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\right)$$
+  `
+
+  // Convert the Markdown to React components with `remarkToReact`
+  const Content = remarkToReact(content, { components, remarkPlugins: [math] })
+
   return (
-    <>
-      <h2>Maxwell's Equations</h2>
-      <p>The Maxwell's equations describe the behavior of electromagnetic fields:</p>
-      <ol>
-        <li>
-          Gauss's Law for Electric Fields:
-          $$
-          \nabla \cdot \mathbf{E} = \frac{\rho}{\epsilon_0}
-          $$
-        </li>
-        <li>
-          Gauss's Law for Magnetic Fields:
-          $$
-          \nabla \cdot \mathbf{B} = 0
-          $$
-        </li>
-        <li>
-          Faraday's Law of Induction:
-          $$
-          \nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}
-          $$
-        </li>
-        <li>
-          Ampere's Law with Maxwell's Correction:
-          $$
-          \nabla \times \mathbf{B} = \mu_0 \left( \mathbf{J} + \epsilon_0 \frac{\partial \mathbf{E}}{\partial t} \right)
-          $$
-        </li>
-      </ol>
-    </>
+    <MDXProvider components={components}>
+      <Content />
+    </MDXProvider>
   )
 }
